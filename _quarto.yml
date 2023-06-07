@@ -1,0 +1,29 @@
+project:
+  type: website
+
+website:
+  title: "Unknown data pleasures"
+  navbar:
+    background: "#eeeeee"
+    right:
+      - icon: person-circle
+        aria-label: website
+        href: about.qmd
+      - icon: github
+        aria-label: github
+        href: https://github.com/edugonzaloalmorox
+      - icon: twitter
+        aria-label: twitter
+        href: https://twitter.com/EdudinGonzalo
+      - icon: linkedin
+        aria-label: linkedin
+        href: https://www.linkedin.com/in/eduardo-gonzalo-almorox-phd-5b8b4955/
+      
+format:
+  html:
+    theme: ember.scss
+    css: styles.css
+    
+
+editor: visual
+

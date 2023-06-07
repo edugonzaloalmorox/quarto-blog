@@ -1,0 +1,14 @@
+{
+  "hash": "c21e37ff12d4541d0331935340ad0438",
+  "result": {
+    "markdown": "---\ntitle: \"Setting up a AWS environment on Mac\"\nauthor: \"Edu Gonzalo-Almorox\"\ndate: \"2023-05-26\"\ncategories: [aws, mlops]\nimage: \"image.jpg\"\n---\n\n\n# Introduction\n\nThe beginning of my MLOps Zoomcamp course developed by Alexey consists of setting up the environment that allows my local machine (a MacBook pro) to interact with the services offered by AWS. Although the steps to follow are very well detailed in this video or in these notes, there are some issues still worth noting for Mac users.\n\n## 1. Connection of EC2 to local machine\n\nAs suggested by the instructor, the most convenient type of instance is a t2,xlarge Amazon Linux. Once launched on AWS management console the way to connect to your local machine is by locating the `.pem` created while starting the instance in the .ssh (hidden) folder and running the following command in the terminal\n\n`ssh -i ~/.ssh/pepino.pem ec2-user@<public IPv4 address>`\n\n![](ssh_folder.png){width=\"692\"}\n\nNote that the user name associated with Mac is not `@ubuntu` but `ec2-user` instead. Apart from that, the remaining steps detailed in the video to provide an alias to Host remain the same. The aim for that is to avoid typing such a long instruction and connect it using the alias instead.\n\n![](connection.png)\n\n## 2. Installation of Docker\n\nThe installation of Docker on EC2 is not on Linux so the instructions using the `apt` command will not work. As an alternative there are options that recommend the following commands on the terminal \n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyr)\n```\n:::\n\n\nAlso, the Amazon Linux instance is likely to be from 2023.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

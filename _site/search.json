@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Setting up a AWS environment on Mac",
+    "section": "",
+    "text": "The beginning of the MLOps Zoomcamp course developed by Alexey consists of setting up the environment that allows my local machine (a MacBook pro) to interact with the services offered by AWS. Although the steps to follow are very well detailed in this video or in these notes, there are some issues still worth noting for Mac users.\n\n1. Connection of EC2 to local machine\nAs suggested by the instructor, the most convenient type of instance is a t2,xlarge Amazon Linux. Once launched on AWS management console the way to connect to your local machine is by locating the .pem created while starting the instance in the .ssh (hidden) folder and running the following command in the terminal\nssh -i ~/.ssh/<name of pem_file.pem> ec2-user@<public IPv4 address>\n\nNote that the user name associated with Mac is not @ubuntu but ec2-user instead. Apart from that, the remaining steps detailed in the video to provide an alias to Host remain the same. The aim for that is to avoid typing such a long instruction and connect it using the alias instead.\n\n\n\n2. Installation of Docker\nThe installation of Docker on EC2 is not on Linux so the instructions using the apt command will not work. As an alternative there are options that recommend installing the Docker Community Edition Package using the following commands on the terminal\nsudo yum update -y\nsudo amazon-linux-extras install docker\nYet, if using an Amazon Linux instance from 2023, using amazon-linux-extras is likely to render an error:\nsudo: amazon-linux-extras: command not found\nThis is because the instance from 2023 does not have amazon-linux-extras. To overcome this problem simply use and it will work 🤞\nsudo yum install -y docker"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the new version of my blog.\nThe idea of this blog is to gatehr digital notes that I take here and there in a more or less ordered way so that I have them somewhere in a digital format."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Unknown data Pleasures…",
+    "section": "",
+    "text": "Setting up a AWS environment on Mac\n\n\n\n\n\n\n\naws\n\n\nmlops\n\n\nEC2\n\n\n\n\n\n\n\n\n\n\n\nMay 26, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About me…",
+    "section": "",
+    "text": "I am Edu 👋 , welcome to my blog!\nI am an economist turned into data scientist with international and multicultural experience in analytics. Throughout my career in several industries, I have been passionate about deriving actionable insights from complex data to address business needs and drive meaningful impact.\nMy areas of expertise involve the application of Machine Learning and (quasi) experimental methods. This blog aims to share reflections about these that may help others in their data journey.\nIn addition munging with data, in my free time I 🚴‍♂️, sometimes for a while, and 🏃‍♂️ in weird places.\nEnjoy your stay and if you have comments or suggestions please do not hesitate to send me an email to eduardogonzaloalmorox@gmail.com or reach me out on Twitter."
+  }
+]

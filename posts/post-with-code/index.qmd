@@ -1,0 +1,41 @@
+---
+title: "Setting up a AWS environment on Mac"
+author: "Edu Gonzalo-Almorox"
+date: "2023-05-26"
+categories: [aws, mlops, EC2]
+image: "ec2_mac.png"
+---
+
+If you want to create a MLOps project, it is likely that you will interact with services offered by a cloud provider. For doing that you will likely require to link your local machine to any of the instances offered by the cloud provider. In this blog, we will see how to set up the environment for a Mac machine to work with an EC2 instance on AWS. 
+
+### 1. Create an instance in AWS 
+
+In general terms, an instance is a server that provides computing services and that is managed by the cloud provider. AWS offers different types of instances depending on the activity to be performed
+
+### 1. Connection of EC2 to local machine
+
+As suggested by the instructor, the most convenient type of instance is a `t2.xlarge` Amazon Linux. Once launched on AWS management console the way to connect to your local machine is by locating the `.pem` created while starting the instance in the .ssh (hidden) folder and running the following command in the terminal
+
+`ssh -i ~/.ssh/<name of pem_file.pem> ec2-user@<public IPv4 address>`
+
+![](ssh_folder.png){width="692"}
+
+Note that the user name associated with Mac is not `@ubuntu` but `ec2-user` instead. Apart from that, the remaining steps detailed in the video to provide an alias to Host remain the same. The aim for that is to avoid typing such a long instruction and connect it using the alias instead.
+
+![](connection.png)
+
+### 2. Installation of Docker
+
+The installation of Docker on EC2 is not on Linux so the instructions using the `apt` command will not work. As an alternative there are options that recommend installing the [Docker Community Edition Package](https://docs.docker.com/get-docker/) using the following commands on the terminal
+
+`sudo yum update -y`
+
+`sudo amazon-linux-extras install docker`
+
+Yet, if using an Amazon Linux instance from 2023, using `amazon-linux-extras` is likely to render an error:
+
+`sudo: amazon-linux-extras: command not found`
+
+This is because the instance from 2023 does not have `amazon-linux-extras`. To overcome this problem simply use and it will work 🤞
+
+`sudo yum install -y docker`
