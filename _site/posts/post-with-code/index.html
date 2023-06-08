@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Edu Gonzalo-Almorox">
-<meta name="dcterms.date" content="2023-05-26">
+<meta name="dcterms.date" content="2023-06-08">
 
 <title>Unknown data pleasures - Setting up a AWS environment on Mac</title>
 <style>
@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -133,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 26, 2023</p>
+        <p class="date">June 8, 2023</p>
       </div>
     </div>
     
@@ -144,36 +144,94 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#launch-an-instance-in-aws" id="toc-launch-an-instance-in-aws" class="nav-link active" data-scroll-target="#launch-an-instance-in-aws">Launch an instance in AWS</a></li>
+  <li><a href="#connection-of-ec2-to-local-machine" id="toc-connection-of-ec2-to-local-machine" class="nav-link" data-scroll-target="#connection-of-ec2-to-local-machine">Connection of EC2 to local machine</a>
+  <ul>
+  <li><a href="#locate-the-key-pair-file-in-your-machine" id="toc-locate-the-key-pair-file-in-your-machine" class="nav-link" data-scroll-target="#locate-the-key-pair-file-in-your-machine">Locate the key pair file in your machine</a></li>
+  <li><a href="#modify-the-host-alias" id="toc-modify-the-host-alias" class="nav-link" data-scroll-target="#modify-the-host-alias">Modify the host alias</a></li>
+  <li><a href="#link-the-key-pair-to-aws-instance" id="toc-link-the-key-pair-to-aws-instance" class="nav-link" data-scroll-target="#link-the-key-pair-to-aws-instance">Link the key pair to AWS instance</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>The beginning of the MLOps Zoomcamp course developed by Alexey consists of setting up the environment that allows my local machine (a MacBook pro) to interact with the services offered by AWS. Although the steps to follow are very well detailed in this video or in these notes, there are some issues still worth noting for Mac users.</p>
+<p>If you want to create a MLOps project, it is likely that you will interact with services offered by a cloud provider. For doing that you will likely require to link your local machine to any of the instances offered by the cloud provider. In this blog, we will see how to set up the environment for a Mac machine to work with an EC2 instance on AWS.&nbsp;</p>
+<section id="launch-an-instance-in-aws" class="level3">
+<h3 class="anchored" data-anchor-id="launch-an-instance-in-aws">Launch an instance in AWS</h3>
+<p>In general terms, an instance is a server that provides computing services and that is managed by the cloud provider. AWS offers different types of instances depending on the activity to be performed (computation, memory intensive or graphic intensive).</p>
+<p>The most common instances for general use are the Elastic Compute Cloud - <em>EC2</em> - which offer a <a href="https://aws.amazon.com/ec2/instance-types/?trk=e011bdeb-247d-4bc7-92eb-1b11f87bfc8a&amp;sc_channel=ps&amp;ef_id=CjwKCAjw-IWkBhBTEiwA2exyO1pn8lCc9XWbS9Jujs1qGVQdBcNcmaCJ2CPeIfz5OMPBTyODbXKkjhoCOTkQAvD_BwE:G:s&amp;s_kwcid=AL!4422!3!536392708261!e!!g!!aws%20ec2%20instance%20types!12195830327!119606867160">range of combinations</a> in terms of CPU, storage and networking capacity. For choosing the right instance there are three main points to consider:</p>
+<ul>
+<li><p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">Define the operating system for the Amazon Machine Image</a>: Linux, macOS, Ubuntu, Windows…</p></li>
+<li><p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Define the instance type</a> : nano, mini, large…</p></li>
+<li><p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Define the key pair</a> : This is important for connecting your local machine to the instance since these are the security credentials to prove the identity when connecting to an EC2 instance. There are two key types available: <code>.pem</code> and <code>.ppk</code></p></li>
+</ul>
+</section>
 <section id="connection-of-ec2-to-local-machine" class="level3">
-<h3 class="anchored" data-anchor-id="connection-of-ec2-to-local-machine">1. Connection of EC2 to local machine</h3>
-<p>As suggested by the instructor, the most convenient type of instance is a t2,xlarge Amazon Linux. Once launched on AWS management console the way to connect to your local machine is by locating the <code>.pem</code> created while starting the instance in the .ssh (hidden) folder and running the following command in the terminal</p>
+<h3 class="anchored" data-anchor-id="connection-of-ec2-to-local-machine">Connection of EC2 to local machine</h3>
+<p>A convenient type of instance for MLOps at user lever can be a <code>t2.xlarge</code> Amazon Linux 2023. Yet, the choice of the type of instance will depend on the nature of the project and the budget available.</p>
+<section id="locate-the-key-pair-file-in-your-machine" class="level4">
+<h4 class="anchored" data-anchor-id="locate-the-key-pair-file-in-your-machine">Locate the key pair file in your machine</h4>
+<p>Once the instance is launched on AWS management console, the way to connect it to your local machine is by locating the <code>.pem</code> key pair created when launching the instance, in the .ssh (hidden)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> folder of the local machine and running the following command on the terminal</p>
 <p><code>ssh -i ~/.ssh/&lt;name of pem_file.pem&gt; ec2-user@&lt;public IPv4 address&gt;</code></p>
-<p><img src="ssh_folder.png" class="img-fluid" width="692"></p>
-<p>Note that the user name associated with Mac is not <code>@ubuntu</code> but <code>ec2-user</code> instead. Apart from that, the remaining steps detailed in the video to provide an alias to Host remain the same. The aim for that is to avoid typing such a long instruction and connect it using the alias instead.</p>
-<p><img src="connection.png" class="img-fluid"></p>
+<p><img src="directory.png" class="img-fluid"></p>
+<p>The code essentially allows and identification of the local machine in the AWS instance. Note that the user name associated with Mac is not <code>@ubuntu</code> but <code>ec2-user</code> instead.</p>
 </section>
-<section id="installation-of-docker" class="level3">
-<h3 class="anchored" data-anchor-id="installation-of-docker">2. Installation of Docker</h3>
-<p>The installation of Docker on EC2 is not on Linux so the instructions using the <code>apt</code> command will not work. As an alternative there are options that recommend installing the <a href="https://docs.docker.com/get-docker/">Docker Community Edition Package</a> using the following commands on the terminal</p>
-<p><code>sudo yum update -y</code></p>
-<p><code>sudo amazon-linux-extras install docker</code></p>
-<p>Yet, if using an Amazon Linux instance from 2023, using <code>amazon-linux-extras</code> is likely to render an error:</p>
-<p><code>sudo: amazon-linux-extras: command not found</code></p>
-<p>This is because the instance from 2023 does not have <code>amazon-linux-extras</code>. To overcome this problem simply use and it will work 🤞</p>
-<p><code>sudo yum install -y docker</code></p>
+<section id="modify-the-host-alias" class="level4">
+<h4 class="anchored" data-anchor-id="modify-the-host-alias">Modify the host alias</h4>
+<p>To avoid adding the public IPv4 address every time the instance is launched, we can modify the config file in the <code>.ssh</code> folder and provide an alias (for example <code>mlops-zoomcamp</code>) to the Host. The aim for that is to avoid typing such a long instruction and connect it using the alias instead.</p>
+<p><img src="config.png" class="img-fluid" width="722"></p>
+<p>The <code>config</code> file is composed of the following Linux parameters.</p>
+<ul>
+<li><p><strong>Host:</strong> Is the alias you want to use to launch your instance</p></li>
+<li><p><strong>HostName:</strong> Is the Public IPv4 address of your instance.</p>
+<blockquote class="blockquote">
+<p>⚠️ Every time the instance is launched this parameter changes and therefore it also needs to be changed in the config file ⚠️</p>
+<p><img src="IPv4.png" class="img-fluid"></p>
+</blockquote></li>
+<li><p><strong>IdentityFile:</strong> File with the pair key</p></li>
+<li><p><strong>StrictHostKeyChecking:</strong> It specifies if there are host keys checked</p></li>
+</ul>
+</section>
+<section id="link-the-key-pair-to-aws-instance" class="level4">
+<h4 class="anchored" data-anchor-id="link-the-key-pair-to-aws-instance">Link the key pair to AWS instance</h4>
+<p>To connect to the instance you just need to type the following command</p>
+<p><code>ssh &lt;host_alias&gt;</code></p>
+<p>The first time you try to connect you may receive the following message</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ec2_install.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>In that case you need to install the <code>.pem</code> key pair downloaded using <code>chmod 0400 &lt;location_pem_file&gt;</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ec2_install_2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Voilà 🥳 …. now your machine is connected.</p>
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>To view hidden folders on mac press Command + Shift + Dot<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><code>chmod</code> Is a Linux command that sets the permissions for file’s access. <code>0400</code> enables the user to read but can’t write nor execute.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
