@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Edu Gonzalo-Almorox">
-<meta name="dcterms.date" content="2023-06-08">
+<meta name="dcterms.date" content="2023-06-09">
 
-<title>Unknown data pleasures - Setting up a AWS environment on Mac</title>
+<title>Unknown data pleasures - Setting up an AWS environment on Mac</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Setting up a AWS environment on Mac</h1>
+      <h1 class="title">Setting up an AWS environment on Mac</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">aws</div>
                 <div class="quarto-category">mlops</div>
@@ -133,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 8, 2023</p>
+        <p class="date">June 9, 2023</p>
       </div>
     </div>
     
@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#launch-an-instance-in-aws" id="toc-launch-an-instance-in-aws" class="nav-link active" data-scroll-target="#launch-an-instance-in-aws">Launch an instance in AWS</a></li>
+  <li><a href="#launch-an-instance-on-aws" id="toc-launch-an-instance-on-aws" class="nav-link active" data-scroll-target="#launch-an-instance-on-aws">Launch an instance on AWS</a></li>
   <li><a href="#connection-of-ec2-to-local-machine" id="toc-connection-of-ec2-to-local-machine" class="nav-link" data-scroll-target="#connection-of-ec2-to-local-machine">Connection of EC2 to local machine</a>
   <ul>
   <li><a href="#locate-the-key-pair-file-in-your-machine" id="toc-locate-the-key-pair-file-in-your-machine" class="nav-link" data-scroll-target="#locate-the-key-pair-file-in-your-machine">Locate the key pair file in your machine</a></li>
@@ -165,10 +165,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>If you want to create a MLOps project, it is likely that you will interact with services offered by a cloud provider. For doing that you will likely require to link your local machine to any of the instances offered by the cloud provider. In this blog, we will see how to set up the environment for a Mac machine to work with an EC2 instance on AWS.&nbsp;</p>
-<section id="launch-an-instance-in-aws" class="level3">
-<h3 class="anchored" data-anchor-id="launch-an-instance-in-aws">Launch an instance in AWS</h3>
-<p>In general terms, an instance is a server that provides computing services and that is managed by the cloud provider. AWS offers different types of instances depending on the activity to be performed (computation, memory intensive or graphic intensive).</p>
+<p>If you want to create a MLOps project, it is likely that you will interact with services offered by a cloud provider. For doing that you will likely require to link your local machine to any of the instances offered by the cloud provider. In this post, we will see how to set up the environment for a Mac machine to work with an EC2 instance on AWS.&nbsp;</p>
+<section id="launch-an-instance-on-aws" class="level3">
+<h3 class="anchored" data-anchor-id="launch-an-instance-on-aws">Launch an instance on AWS</h3>
+<p>An instance is a server that provides computing services and that is managed by the cloud provider. AWS offers different types of instances depending on the activity to be performed (computation, memory intensive or graphic intensive).</p>
 <p>The most common instances for general use are the Elastic Compute Cloud - <em>EC2</em> - which offer a <a href="https://aws.amazon.com/ec2/instance-types/?trk=e011bdeb-247d-4bc7-92eb-1b11f87bfc8a&amp;sc_channel=ps&amp;ef_id=CjwKCAjw-IWkBhBTEiwA2exyO1pn8lCc9XWbS9Jujs1qGVQdBcNcmaCJ2CPeIfz5OMPBTyODbXKkjhoCOTkQAvD_BwE:G:s&amp;s_kwcid=AL!4422!3!536392708261!e!!g!!aws%20ec2%20instance%20types!12195830327!119606867160">range of combinations</a> in terms of CPU, storage and networking capacity. For choosing the right instance there are three main points to consider:</p>
 <ul>
 <li><p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">Define the operating system for the Amazon Machine Image</a>: Linux, macOS, Ubuntu, Windows…</p></li>
@@ -178,13 +178,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="connection-of-ec2-to-local-machine" class="level3">
 <h3 class="anchored" data-anchor-id="connection-of-ec2-to-local-machine">Connection of EC2 to local machine</h3>
-<p>A convenient type of instance for MLOps at user lever can be a <code>t2.xlarge</code> Amazon Linux 2023. Yet, the choice of the type of instance will depend on the nature of the project and the budget available.</p>
+<p>A convenient type of instance for MLOps can be a <code>t2.xlarge</code> Amazon Linux 2023. I provides a fair value for the computation power acquired. Yet, the choice of the type of instance will depend on the nature of the project and the budget available.</p>
 <section id="locate-the-key-pair-file-in-your-machine" class="level4">
 <h4 class="anchored" data-anchor-id="locate-the-key-pair-file-in-your-machine">Locate the key pair file in your machine</h4>
 <p>Once the instance is launched on AWS management console, the way to connect it to your local machine is by locating the <code>.pem</code> key pair created when launching the instance, in the .ssh (hidden)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> folder of the local machine and running the following command on the terminal</p>
 <p><code>ssh -i ~/.ssh/&lt;name of pem_file.pem&gt; ec2-user@&lt;public IPv4 address&gt;</code></p>
 <p><img src="directory.png" class="img-fluid"></p>
-<p>The code essentially allows and identification of the local machine in the AWS instance. Note that the user name associated with Mac is not <code>@ubuntu</code> but <code>ec2-user</code> instead.</p>
+<p>This code essentially connects the local machine to the AWS instance. Note that the user name associated with Mac is not <code>@ubuntu</code> but <code>ec2-user</code> instead.</p>
 </section>
 <section id="modify-the-host-alias" class="level4">
 <h4 class="anchored" data-anchor-id="modify-the-host-alias">Modify the host alias</h4>
@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <p>⚠️ Every time the instance is launched this parameter changes and therefore it also needs to be changed in the config file ⚠️</p>
 <p><img src="IPv4.png" class="img-fluid"></p>
 </blockquote></li>
-<li><p><strong>IdentityFile:</strong> File with the pair key</p></li>
+<li><p><strong>IdentityFile:</strong> File with the key</p></li>
 <li><p><strong>StrictHostKeyChecking:</strong> It specifies if there are host keys checked</p></li>
 </ul>
 </section>
@@ -212,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="ec2_install.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<p>In that case you need to install the <code>.pem</code> key pair downloaded using <code>chmod 0400 &lt;location_pem_file&gt;</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>In that case you need to change the permissions of the public key using <code>chmod 0400 &lt;location_pem_file&gt;</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="ec2_install_2.png" class="img-fluid figure-img"></p>
@@ -364,6 +364,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="edugonzaloalmorox/quarto-blog" data-repo-id="R_kgDOJskfmQ" data-category="General" data-category-id="DIC_kwDOJskfmc4CXFNh" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 
