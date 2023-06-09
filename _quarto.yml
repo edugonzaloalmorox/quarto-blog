@@ -28,3 +28,7 @@ format:
 
 editor: visual
 
+comments:
+  giscus:
+    repo: edugonzaloalmorox/quarto-blog
+
