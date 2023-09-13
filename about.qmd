@@ -22,8 +22,8 @@ I am Edu 👋 , welcome to my blog!
 
 I am an economist turned into data scientist with international and multicultural experience in analytics. Throughout my career in several industries, I have been passionate about deriving actionable insights from complex data to address business needs and drive meaningful impact.
 
-My areas of expertise involve the application of Machine Learning and (quasi) experimental methods. This blog aims to share reflections about these that may help others in their data journey.
+My areas of expertise involve the application of Machine Learning and (quasi) experimental methods. This blog aims to share reflections about these that may help others in their data journey. In short, a place where I can share different types of digital notes.
 
-In addition munging with data, in my free time I 🚴‍♂️, sometimes [for a while](https://www.northcape-tarifa.com/2022-tracking/), and 🏃‍♂️ in [weird places](http://www.saharamarathon.org/en/races/results-2015/).
+In addition to munging with data, outside work I 🚴‍♂️, sometimes [for a while](https://www.northcape-tarifa.com/2022-tracking/), and 🏃‍♂️ in [weird places](http://www.saharamarathon.org/en/races/results-2015/). I also read and enjoy every kind of good music.
 
 Enjoy your stay and if you have comments or suggestions please do not hesitate to send me an email to [eduardogonzaloalmorox\@gmail.com](https://edugonzalmo.netlify.app/page/about/eduardogonzaloalmorox@gmail.com) or reach me out on [Twitter](https://twitter.com/EdudinGonzalo).
