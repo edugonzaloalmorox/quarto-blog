@@ -3,6 +3,8 @@ project:
 
 website:
   title: "Unknown data pleasures"
+  site-url: 'https://edugonalmo.netlify.app'
+  repo-url: 'https://github.com/edugonzaloalmorox/quarto-blog'
   navbar:
     background: "#eeeeee"
     right:
