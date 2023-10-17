@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://edugonalmo.netlify.app/posts/post-with-code/index.html</loc>
-    <lastmod>2023-09-11T06:40:40.508Z</lastmod>
+    <lastmod>2023-09-26T19:44:10.585Z</lastmod>
   </url>
   <url>
     <loc>https://edugonalmo.netlify.app/posts/2023_09_10_atom_files/index.html</loc>
@@ -10,14 +10,22 @@
   </url>
   <url>
     <loc>https://edugonalmo.netlify.app/index.html</loc>
-    <lastmod>2023-09-14T08:29:44.342Z</lastmod>
+    <lastmod>2023-10-17T08:31:04.821Z</lastmod>
   </url>
   <url>
     <loc>https://edugonalmo.netlify.app/about.html</loc>
-    <lastmod>2023-09-14T08:25:56.923Z</lastmod>
+    <lastmod>2023-09-26T19:53:31.443Z</lastmod>
   </url>
   <url>
     <loc>https://edugonalmo.netlify.app/posts/2023_09_13_extract_info_from_atom_files/index.html</loc>
-    <lastmod>2023-09-14T08:29:44.012Z</lastmod>
+    <lastmod>2023-10-11T19:50:23.671Z</lastmod>
+  </url>
+  <url>
+    <loc>https://edugonalmo.netlify.app/posts/2023_09_28_deploy_lambda_with_docker/index.html</loc>
+    <lastmod>2023-09-26T20:02:24.276Z</lastmod>
+  </url>
+  <url>
+    <loc>https://edugonalmo.netlify.app/posts/2023_10_12_use_ml_to_locate_data/index.html</loc>
+    <lastmod>2023-10-17T08:31:04.421Z</lastmod>
   </url>
 </urlset>
