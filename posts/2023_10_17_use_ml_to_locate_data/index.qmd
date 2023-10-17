@@ -89,12 +89,11 @@ lon_grid, lat_grid = np.meshgrid(lons, lats)
 
 ## Calculate the distance
 
-Once we have defined the grid, the next step is to calculate the distance from each point on the grid to each source of information. There are two types of distances we can use: `Haversine` distance and` Great Circle` distance.
+Once we have defined the grid, the next step is to calculate the distance from each point on the grid to each source of information. There are two types of distances we can use: `Haversine` distance and`Great Circle` distance.
 
 Haversine distance is the shortest distance between two points on a sphere. Great Circle distance is another type of distance we can use to calculate the distance between two points on a sphere. It's the shortest distance along the great circle, which is the imaginary circle that encircles the sphere and passes through the two points.
 
 Which distance we use depends on the specific case. In the case of the Thames, which is a long, winding river, the shortest distance between two points on the river may not be the shortest distance between the two points on the grid.
-
 
 ```{python}
 
@@ -166,9 +165,9 @@ def great_circle_distance(lon, lat, coords):
 
 ### Calculate the probabilities
 
-Once we have the distances from the suspect to each point on the grid, we need to calculate the probability of the suspect being at each point. To do this, we can use a statistical distribution, such as a `normal distribution` or a` lognormal distribution`.
+Once we have the distances from the suspect to each point on the grid, we need to calculate the probability of the suspect being at each point. To do this, we can use a statistical distribution, such as a `normal distribution` or a`lognormal distribution`.
 
-A normal distribution is bell-shaped, with the highest probability in the center and the probability decreasing as you move away from the center. 
+A normal distribution is bell-shaped, with the highest probability in the center and the probability decreasing as you move away from the center.
 
 ```{python}
 # Probability functions 
@@ -272,7 +271,7 @@ Once we have calculated the probability of the suspect being at each point on th
 
 One way to combine probabilities is to use a stacking ensemble method. Stacking ensemble methods combine the predictions of multiple machine learning models to produce a more accurate prediction.
 
-In tis case, we can do this by training a Machine Learning method, `RandomForest()`, on the probabilities from the three sources of information to predict the (most likely) coordinates that compose the grid. Since this type of output is based on two elements (latitude and longitude), the random forest requires a `MultiOutputRegressor()`
+In this case, we can do this by training a Machine Learning method, `RandomForest()`, on the probabilities from the three sources of information to predict the (most likely) coordinates that compose the grid. Since this type of output is based on two elements (latitude and longitude), the random forest requires a `MultiOutputRegressor()`
 
 ```{python}
 
@@ -308,17 +307,15 @@ display(f"The most likely location is {Y_pred[1]} and a root mean squared error 
 
 ```
 
-The coordinates where researcher is more likely to be are `[51.4999544, -0.0699982]`. Since we are running a regression model the evaluation of our results is on the basis of the Mean Square Error (MSE). The model provides which renders a `0.0239`
+The coordinates where the suspect is more likely to be are `[51.4999544, -0.0699982]`. Since we are running a regression model we can evaluate the results of the model on the basis of the Root Mean Square Error (RMSE) (`0.0239)`
 
 ## Visualise the results
 
 Once we have the predicted probabilities, we can visualize them using a library like `folium`. This will show us the most likely location of the suspect.
 
-
-
 ```{python}
 london_coords = [51.509865, -0.118092]
-researcher_coords = [51.4999544,-0.0699982]
+suspect_coords = [51.4999544,-0.0699982]
 boe_coords = [51.514171,-0.088438]
 
 london_map = folium.Map(location=london_coords, zoom_start=12.5)
@@ -326,15 +323,15 @@ london_map = folium.Map(location=london_coords, zoom_start=12.5)
 
 
 folium.Marker(
-    location= researcher_coords,
-    popup="Researcher likely location",
+    location= suspect_coords,
+    popup="Suspect likely location",
     icon=folium.Icon(color="red"),
 ).add_to(london_map)
 
 folium.Circle(
     radius=500,
-    location= researcher_coords,
-    popup="Researcher likely location",
+    location= suspect_coords,
+    popup="Suspect likely location",
     fill=False,
 ).add_to(london_map)
 
@@ -352,6 +349,4 @@ london_map
 
 ## Conclusion
 
-By using machine learning, we can estimate a likely location in a map quickly and efficiently even in cases where there is limited information.
-
-
+In this blog we have seen an example of how we can use machine learning to estimate a likely location in a map quickly and efficiently even in cases where there is limited information.
