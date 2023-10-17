@@ -19,7 +19,7 @@ Sometimes valuable information often comes in the form of Atom or RSS files, whi
 
 ## Atom files 101
 
-First, let's locate the data .
+First, let's locate the data.
 
 In this blog, we'll be exploring a valuable source of information: public contracts. In particular, we will use the open data regarding [public contracts](https://www.hacienda.gob.es/es-ES/GobiernoAbierto/Datos%20Abiertos/Paginas/LicitacionesContratante.aspx) released by the Spanish Ministry for Economic Affairs. These datasets are regularly updated, with new information becoming available each day throughout the month.
 

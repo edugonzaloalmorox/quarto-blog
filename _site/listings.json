@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023_10_12_use_ml_to_locate_data/index.html",
       "/posts/2023_09_13_extract_info_from_atom_files/index.html",
       "/posts/post-with-code/index.html"
     ]

@@ -1,0 +1,11 @@
+{
+  "hash": "3d2ac59f9df094250da7723cfe4db326",
+  "result": {
+    "markdown": "---\ntitle: Deploy lambda functions with docker\nauthor: Edu Gonzalo-Almorox\ndate: '2023-09-28'\ntoc: true\ntoc-depth: 4\ntoc-title: Contents\nformat:\n  html:\n    code-fold: true\ncategories:\n  - AWS\n  - Lambda\n  - Docker\nimage: images/lambda_docker.jpeg\n---\n\nLambda functions are an essential part of any machine learning model. They allow to run dif\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
