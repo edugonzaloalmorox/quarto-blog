@@ -1,5 +1,5 @@
 ---
-title: "2023 Bike Packing Wrap Up"
+title: "Wrapped 2023 in Ultracycling"
 author: "Edu Gonzalo-Almorox"
 date: "2023-12-12"
 toc: true
