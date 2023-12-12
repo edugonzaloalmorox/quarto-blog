@@ -1,0 +1,513 @@
+---
+title: "2023 Bike Packing Wrap Up"
+author: "Edu Gonzalo-Almorox"
+date: "2023-12-12"
+toc: true
+toc-depth: 4
+toc-title: Contents
+format:
+  html:
+    code-fold: true
+categories: [Data Wrangling, Data Viz]
+image: "images/ultra_cover.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+![](images/test.png)
+
+As this year ends, I look back at the highlights in the bike-packing world. The year 2023 has seen a significant rise in bike-packing events globally. According to [DotWatcher](https://dotwatcher.cc/), a UK-based company that's building a strong community around this sport, bike-packing racing is experiencing a golden age with an increase in events. Whether it's road, off-road, or gravel, there's been a noticeable growth in these activities worldwide during the last year.
+
+In this blog, I'll share insights about the 2023 bike-packing scene, using information from riders[^1] who participated in various events and shared their experiences and gear details on [DotWatcher](https://dotwatcher.cc/) and [Bikepacking.com](https://bikepacking.com/)
+
+[^1]: Disclaimer: This sample does not represent the entire population participating in bikepacking events but only those riders that voluntarily post information about their gear.
+
+## Analyzing bikepacking trends: The Data
+
+Before we dive into the insights, it's important to understand the source of our data. The information is gathered from [Rigs of](https://bikepacking.com/bikes/bikepacking-race-rigs/) and [Bikes of](https://dotwatcher.cc/features/bikes-of?page=1) sections. These are specific sections in Bikepacking.com and Dotwatcher.cc where where riders share details about their bikes and gear for races.
+
+![Example of section *Bikes of* from Dotwatcher.cc](images/bikes_of.png)
+
+The real challenge lies in extracting meaningful information from these diverse and detailed submissions. For instance, we're looking at specifics like bike models, bag types, and wheel choices.
+
+To tackle this, I've developed a tool that combines web scraping techniques with advanced language processing[^2]. This approach is especially effective for sorting through and making sense of unstructured data. It's not just about collecting data; it's about finding the patterns and preferences that really define the bike-packing community in 2023.
+
+[^2]: To tackle this task, I am using *gpt-3.5-turbo-1106.*
+
+Below is a table offering a snapshot of what these data reveal:
+
+```{r, load_libraries, echo = FALSE, include=TRUE, warnings= FALSE, message=FALSE}
+
+library(tidyverse)
+library(knitr)
+library(gt)
+
+
+df_bikepacking = read_csv('data/app_df.csv') %>%
+  mutate(type_race = case_when(
+    type_race == 'gravel' ~ 'Gravel', 
+    type_race == 'off_road' ~ 'Off Road', 
+    type_race == 'road' ~ 'Road', 
+    TRUE ~ type_race
+))
+
+
+gt(df_bikepacking %>% head(5) ) %>%
+  cols_label(
+    country = "Country",
+    age_group = "Age Group",
+    race = "Race", 
+    bike_brand = "Brand",
+    bike_models = "Model",
+    type_race = "Type of Race",
+  )
+
+
+```
+
+## Which Events Captured the Most Interest Among Riders?
+
+Gravel events seem to be increasingly capturing the attention of riders. From the nearly 2200 riders that shared details about their gear choices, 42% of them were associated with gravel events, outshining Off-Road events (35%) and Road events (23%) in engagement.
+
+```{r, drilldowns, echo = FALSE, include=TRUE, warnings= FALSE, message=FALSE }
+
+library(purrr)
+library(highcharter)
+library(htmlwidgets)
+
+
+
+by_type = df_bikepacking |>
+  count(type_race)
+
+
+pie_chart<- by_type|>
+#set up highchart object
+  hchart("pie", 
+         #mapping for pie chart
+         hcaes(x = type_race, y = n, drilldown=type_race), 
+         name="Total riders by Type of Race")|>
+  #add title
+  hc_title(text="By Race Type") |> 
+  hc_subtitle(text="Click to see the drilldown") |> 
+  hc_caption(text="Source Bikepacking.com and Dotwatcher.cc - @EdudinGonzalo") |> 
+  hc_plotOptions(pie = list(innerSize="60%"))
+
+
+by_subtype = df_bikepacking |>
+  count(type_race, race) |>
+  group_nest(type_race) |>
+  mutate(
+    #id should be set to parent level
+    id = type_race,
+    #type specifies chart type
+    type = "column",
+    #drilldown data should contain arguments for chart - use purrr to map
+    data = purrr::map(data, mutate, name = race, y  = n),
+     data = purrr::map(data, list_parse))
+
+
+
+drilldown_chart<-pie_chart|>
+  hc_drilldown(
+    #map to data
+    series = list_parse(by_subtype),
+    allowPointDrilldown = TRUE,
+    #set stylings of data labels that offer drill down views
+    activeDataLabelStyle = list(
+      textDecoration="none",
+      color="black"
+    )
+  )
+
+
+final_chart = drilldown_chart|>
+  #relabel x Axis
+  hc_xAxis(title = list(text=""))|>
+  #relabel y Axis
+  hc_yAxis(title = list(text="# of Riders"))|>
+  #reorder column charts by y Axis
+  hc_plotOptions(column = list(
+                   dataSorting = list(enabled=TRUE)
+                   )
+                 )|>
+  #customize drilldown & drillup events
+  hc_chart(
+           events = list(
+             drilldown = JS(
+               "function(){
+               this.title.update({text: 'Riders by Race'})
+               this.update({
+                  xAxis:{visible:true},
+                  yAxis:{visible:true}
+               })
+               }"
+             ),
+             drillup =  JS("function() {
+              this.title.update({text: 'Riders by Type of Race'})
+              
+              this.update({
+                xAxis:{visible:false},
+                yAxis:{visible:false}
+               })
+             }")
+           ))
+
+
+pal = c("#cb9e01","#81b201","#778899")
+
+#create and save theme as new variable
+custom_theme <- hc_theme(
+  colors = pal,
+  chart = list(
+    backgroundColor = NULL
+  ),
+  title = list(
+    style = list(
+      color = "#333333",
+      fontFamily = "Lato",
+      fontWeight="bold"
+    )
+  ),
+  xAxis = list(
+    labels=list(style = list(
+      color = "#666666",
+      fontFamily = "Lato"
+    ))
+  ),
+  yAxis = list(
+    labels=list(style = list(
+      color = "#666666",
+      fontFamily = "Lato"
+    ))
+  ),
+  tooltip = list(
+    style = list(
+      fontFamily = "Lato"
+    )
+  ),
+  plotOptions = list(
+    series = list(
+      dataLabels = list(style=list(fontFamily = "Lato")
+      ))
+  )
+)
+
+
+final_chart|>
+  #add theme
+  hc_add_theme(custom_theme)
+
+
+
+
+```
+
+Leading the gravel category is [Badlands race](https://badlands.cc/es/). About 122 riders reported their gear. Following close there are two new races introduced in 2023, [Bright Midnight](https://www.instagram.com/brightmidnight.cc/) and [Seven Serpents](https://www.seven-serpents.com/), which attracted 78 and 70 riders to post their choices respectively.
+
+For off-road cyclists, the classic [Tour Divide](https://tourdivide.org/) was the most popular, with 126 riders providing gear information. Other notable events include the [Atlas Mountain Race](https://www.atlasmountainrace.com/) with 104 participants, the [Silk Mountain Race](https://www.silkroadmountainrace.com/) with 79, and the [Hellenic Mountain Race](https://www.hellenicmountainrace.cc/) with 59. All these events are organized by the same director, adding a unique consistency to their appeal.
+
+In the Road racing category, the [Pan Celtic Race](https://pancelticrace.com/) is at the forefront, with 73 riders sharing their gear choices. This is followed by the [Mittelgerbirge Classique](https://mittelgebirgeclassique.cc/), which drew the interest of 58 riders, and the T[hree Peaks Bike Race](https://www.adventurebikeracing.com/threepeaksbikerace/) with 46 participants.
+
+## Rider demographics
+
+### Age distribution
+
+\
+In cycling events, age demographics show distinct preferences. The majority of participants are in their thirties, and gravel events, in particular, have a consistent appeal to riders in their 30s to 50s. Conversely, off-road events seem to attract the younger and older segments of cyclists more.
+
+Looking more closely at the data, the most engaging gravel events for riders in their 30s include Bright Midnight, with 46 participants, Badlands with 38, and Seven Serpents attracting 35 riders. For the age group of 40 to 50, Badlands emerges as a notable choice, though other events like Bright Midnight, Seven Serpents, [Basajaun](https://www.transiberica.club/basajaun/?lang=es), and [Istra Land](https://www.istraland.cc/) also report comparable participation. These trends suggest a balanced interest in gravel cycling across various age groups.
+
+```{r, age_riders, echo = FALSE, include=TRUE, warnings= FALSE, message=FALSE }
+
+df_test = df_bikepacking %>%
+  filter(!is.na(age_group)) %>%
+  mutate(age_group = fct_relevel(age_group, c('20 or younger',
+                                              '20 - 30 years old',
+                                              '30 - 40 years old',
+                                              '40 - 50 years old',
+                                              '50 - 60 years old',
+                                              '60 - 70 years old', 
+                                              '70 and older'))) %>% count(age_group, type_race) %>%
+  mutate(drilldown = paste0(type_race,'-', age_group))
+
+
+hc_test = df_test %>%
+  hchart(
+    'column',
+    hcaes(x = 'age_group', y = 'n', group = 'type_race', drilldown=drilldown),
+    stacking = "normal"
+  ) %>%
+  hc_title(text="Riders by Age") %>%
+  hc_caption(text="Source Bikepacking.com and Dotwatcher.cc - @EdudinGonzalo") %>%
+  hc_subtitle(text="Click to see the drilldown") %>%
+  hc_colors(c("#cb9e01","#81b201","#778899"))
+
+drill_test =df_bikepacking %>%
+  filter(!is.na(age_group)) %>%
+  mutate(age_group = fct_relevel(age_group, c('20 or younger',
+                                              '20 - 30 years old',
+                                              '30 - 40 years old',
+                                              '40 - 50 years old',
+                                              '50 - 60 years old',
+                                              '60 - 70 years old', 
+                                              '70 and older'))) %>%
+  count(age_group, type_race, race) %>%
+  mutate(id = paste0(type_race,'-', age_group)) %>%
+  select(race, n, id)
+  
+
+
+by_subtype_test = drill_test |>
+  group_nest(id) |>
+  mutate(
+    #id should be set to parent level
+    id = id,
+    #type specifies chart type
+    type = "column",
+    #drilldown data should contain arguments for chart - use purrr to map
+    data = purrr::map(data, mutate, name = race, y  = n),
+    data = purrr::map(data, list_parse))
+
+
+dd_chart = hc_test |>
+  hc_drilldown(
+    #map to data
+    series = list_parse(by_subtype_test),
+    allowPointDrilldown = TRUE)
+
+
+dd_final = dd_chart|>
+  #relabel x Axis
+  hc_xAxis(title = list(text=" "))|>
+  #relabel y Axis
+  hc_yAxis(title = list(text="# of riders"))|>
+  
+  #reorder column charts by y Axis
+  hc_plotOptions(column = list(
+    dataSorting = list(enabled=FALSE)
+  )
+  )|>
+  #customize drilldown & drillup events
+  hc_chart(
+    events = list(
+      drilldown = JS(
+        "function(){
+               this.title.update({text: 'By Race'})
+               this.update({
+                  xAxis:{visible:true},
+                  yAxis:{visible:true}
+               })
+               }"
+      ),
+      drillup =  JS("function() {
+              this.title.update({text: 'Riders by Age'})
+              this.update({
+                xAxis:{visible:true},
+                yAxis:{visible:true}
+               })
+             }")
+    ))
+
+
+
+dd_final|>
+  #add theme
+  hc_add_theme(custom_theme)
+
+
+
+```
+
+### Nationalities of the Participants
+
+The highest number of riders hail from the UK, with Germany and the USA also contributing significantly to the participant pool. However, there's a notable difference in their event preferences.
+
+European riders, particularly from the UK and Germany, show a stronger inclination towards gravel races. In contrast, riders from the USA, Canada, and New Zealand predominantly opt for off-road events, representing between 80% to 90% of entries from these countries.
+
+In the realm of road racing, French and Polish cyclists show a distinct preference, with many choosing to participate in the [Transpyrenees](https://www.transiberica.club/transpyrenees/) and the [Race Through Poland](https://racethroughpoland.pl/), respectively.
+
+```{r, country_riders, echo = FALSE, include=TRUE, warnings= FALSE, message=FALSE }
+
+library(reactablefmtr)
+library(reactable)
+#to add in HTML
+library(htmltools)
+library(htmlwidgets)
+#for added data manipulation
+library(countrycode)
+
+ tbl_data = df_bikepacking %>%
+  count(country, type_race) %>%
+   group_by(country) %>%
+   mutate(total_country = sum(n)) %>%
+   ungroup() %>%
+   mutate(country_test = countrycode(country,  "country.name", "iso2c"))
+ 
+ 
+ bike_tbl = tbl_data %>%
+  ungroup() %>%
+  distinct(country, country_test, total_country)
+
+
+
+flags = read_csv('https://raw.githubusercontent.com/nxrunning/personalblog/master/posts/FIFA-WC-22-Reactable/country_flags_dataset.csv')
+
+bike_tbl_test = bike_tbl %>%
+  left_join(flags %>% 
+              mutate(country_test = countrycode(Country,  "country.name", "iso2c")), 
+            by = c('country' = 'Country')
+  )
+
+
+bike_tbl_test = bike_tbl_test %>% 
+  filter(!is.na(country), 
+         !country %in% c('Santiago', 'Unknown', 'No information')) %>%
+  mutate(ImageURL = ifelse(country == 'Ireland', 'https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg', ImageURL)) %>%
+  select(country, total_country, ImageURL) %>%
+  arrange(-total_country) %>%
+  mutate(rank = row_number())
+  
+
+
+
+reactable(bike_tbl_test,
+          searchable = TRUE,
+          highlight = TRUE,
+          paginationType = "simple",
+          minRows = 5,
+          # Sorting our table based on the FIFA ranking by default
+          defaultSorted = "rank",
+          # Defining vertical and horizontal alignment of each column cell to be center by default 
+          defaultColDef = colDef(
+            vAlign = "bottom",
+            align = "center"
+          ), 
+
+          columns = list(
+            rank = colDef(show=F), 
+            
+            ImageURL = colDef(cell = embed_img(bike_tbl_test,width = 45, height = 40,
+                                               horizontal_align = "center"), name = ""), 
+            
+            country = colDef(name = "Country"),
+            total_country = colDef(name="Total Riders",
+                               align="center",
+                               cell = data_bars(bike_tbl_test,
+                                                fill_color = '#FFBC51',
+                                                text_position="above",
+                                                bar_height=10,
+                                                round_edges = TRUE,
+                                                text_color = "black",
+                                                background = NULL,
+                                                text_size = 14,
+                                                number_fmt = scales::label_number(scale_cut=scales::cut_short_scale())))
+            
+          ),
+          details = function(index){
+          new = tbl_data[tbl_data$country == bike_tbl_test$country[index], ] %>% 
+            ungroup() %>%
+            select(type_race, n) %>%
+            mutate(percent = n/sum(n)) %>%
+            filter(!is.na(type_race))
+          reactable(data=new,
+                
+                    defaultColDef = colDef(vAlign="center", align="center", headerVAlign="center"),
+                    theme = reactableTheme(
+                      style=list(fontFamily="Lato"),
+                      searchInputStyle = list(background="white"),
+                      pageButtonStyle = list(fontSize=9),
+                      backgroundColor="white",
+                      color="black",
+                      footerStyle = list(color="black", fontSize=9),
+                      borderColor="black",
+                      borderWidth=0.0019
+                    ),
+                    columns = list(
+                      instructor=colDef(show=FALSE),
+                      highlight = TRUE,
+                      type_race = colDef(name="", maxWidth=130, align="right", footer="Total Riders by Type of Race", footerStyle=list(color='black')),
+                      # rank = colDef(name="", style=list(fontSize=13), maxWidth=50, align="right"),
+                      percent = colDef(name=" ", minWidth=120),
+                      n = colDef(name="", minWidth=200, 
+                                     cell=data_bars(new,
+                                                   
+                                                    bar_height = 10,
+                                                    text_position = "outside-end",
+                                                    text_size = 12,
+                                                    background = "transparent", 
+                                                    round_edges = TRUE, 
+                                                    fill_color=c("#EBF3FA","#2C87CA"), 
+                                                    fill_gradient = TRUE))))
+                      
+                        }) %>%
+  #add a default font to apply to table, browse font options - https://fonts.google.com/
+  reactablefmtr::google_font(font_family="Lato", font_weight=c(400,600))
+            
+            
+
+```
+
+## Bike Brand preferences
+
+When it comes to the choice of bikes, Canyon and Specialized emerge as the leading brands among riders across various race types. In gravel events, Canyon bikes were used by 8% of the riders, while Specialized bikes accounted for 6%. In the off-road category, Salsa took the lead, being the choice for 11% of the riders, with Canyon and Specialized each capturing 6%. For road racing, Canyon again led the preference with 9%, followed closely by Specialized and Cannondale, each with a 5% usage rate among participants.
+
+```{r, bikes, echo = FALSE, include=TRUE, warnings= FALSE, message=FALSE }
+
+data_plot = df_bikepacking %>%
+  count(type_race, bike_brand)
+
+
+
+hc <- hchart(data_plot, "packedbubble", hcaes(name = bike_brand, value = n, group = type_race)) %>%
+  hc_colors(c("#cb9e01","#81b201","#778899")) %>%
+  hc_title(text="Bike brands by Type of Race") %>%
+  hc_caption(text="Source Bikepacking.com and Dotwatcher.cc - @EdudinGonzalo") 
+
+q95 <- as.numeric(quantile(data_plot$n, .95))
+
+hc %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = "<b>{point.name} bikes:</b> {point.value}"
+  ) %>% 
+  hc_plotOptions(
+    packedbubble = list(
+      maxSize = "250%",
+      zMin = 0,
+      layoutAlgorithm = list(
+        gravitationalConstant =  0.05,
+        splitSeries =  TRUE, # TRUE to group points
+        seriesInteraction = TRUE,
+        dragBetweenSeries = TRUE,
+        parentNodeLimit = TRUE
+      ),
+      dataLabels = list(
+        enabled = TRUE,
+        format = "{point.name}",
+        filter = list(
+          property = "y",
+          operator = ">",
+          value = q95
+        ),
+        style = list(
+          color = "black",
+          textOutline = "none",
+          fontWeight = "normal"
+        )
+      )
+    )
+  ) %>% 
+  hc_add_theme(custom_theme)
+
+
+
+```
+
+Among the most popular bike brands, the Canyon Grizl, Specialized Diverge, Salsa Cutthroat, Cannondale Topstone, and Trek Procaliber stood out as the top models chosen by riders. These models represent the leading choices within their respective brands.
+
+## Conclusion
+
+This blog post has offered a brief look at the 2023 bike-packing scene, using interactive data and insights from the rider community. The trends and preferences highlighted here not only reflect the growing popularity of bike-packing but also the evolving dynamics of this exciting sport.
