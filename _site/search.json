@@ -32,7 +32,7 @@
     "href": "index.html",
     "title": "Unknown data Pleasures…",
     "section": "",
-    "text": "2023 Bike Packing Wrap Up\n\n\n\n\n\n\n\nData Wrangling\n\n\nData Viz\n\n\n\n\n\n\n\n\n\n\n\nDec 12, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nHow to find a needle in a haystack using machine learning\n\n\n\n\n\n\n\nML\n\n\nGIS\n\n\n\n\n\n\n\n\n\n\n\nOct 17, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nExtract information from atom files\n\n\n\n\n\n\n\natom\n\n\nrss\n\n\nData Wrangling\n\n\n\n\n\n\n\n\n\n\n\nSep 14, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nSetting up an AWS environment on Mac\n\n\n\n\n\n\n\nAWS\n\n\nMLOps\n\n\nEC2\n\n\n\n\n\n\n\n\n\n\n\nJun 9, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\nNo matching items"
+    "text": "Wrapped 2023 in Ultracycling\n\n\n\n\n\n\n\nData Wrangling\n\n\nData Viz\n\n\n\n\n\n\n\n\n\n\n\nDec 12, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nHow to find a needle in a haystack using machine learning\n\n\n\n\n\n\n\nML\n\n\nGIS\n\n\n\n\n\n\n\n\n\n\n\nOct 17, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nExtract information from atom files\n\n\n\n\n\n\n\natom\n\n\nrss\n\n\nData Wrangling\n\n\n\n\n\n\n\n\n\n\n\nSep 14, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\n  \n\n\n\n\nSetting up an AWS environment on Mac\n\n\n\n\n\n\n\nAWS\n\n\nMLOps\n\n\nEC2\n\n\n\n\n\n\n\n\n\n\n\nJun 9, 2023\n\n\nEdu Gonzalo-Almorox\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -408,49 +408,49 @@
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "",
     "text": "As this year ends, I look back at the highlights in the bike-packing world. The year 2023 has seen a significant rise in bike-packing events globally. According to DotWatcher, a UK-based company that’s building a strong community around this sport, bike-packing racing is experiencing a golden age with an increase in events. Whether it’s road, off-road, or gravel, there’s been a noticeable growth in these activities worldwide during the last year.\nIn this blog, I’ll share insights about the 2023 bike-packing scene, using information from riders1 who participated in various events and shared their experiences and gear details on DotWatcher and Bikepacking.com"
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#analyzing-bikepacking-trends-the-data",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#analyzing-bikepacking-trends-the-data",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Analyzing bikepacking trends: The Data",
     "text": "Analyzing bikepacking trends: The Data\nBefore we dive into the insights, it’s important to understand the source of our data. The information is gathered from Rigs of and Bikes of sections. These are specific sections in Bikepacking.com and Dotwatcher.cc where where riders share details about their bikes and gear for races.\n\n\n\nExample of section Bikes of from Dotwatcher.cc\n\n\nThe real challenge lies in extracting meaningful information from these diverse and detailed submissions. For instance, we’re looking at specifics like bike models, bag types, and wheel choices.\nTo tackle this, I’ve developed a tool that combines web scraping techniques with advanced language processing2. This approach is especially effective for sorting through and making sense of unstructured data. It’s not just about collecting data; it’s about finding the patterns and preferences that really define the bike-packing community in 2023.\nBelow is a table offering a snapshot of what these data reveal:\n\n\n\n\n\n\n  \n    \n    \n      Country\n      Age Group\n      Race\n      Brand\n      Model\n      Type of Race\n    \n  \n  \n    Austria\n30 - 40 years old\nHellenic Mountain Race 2023\nSpecialized\nEpic\nOff Road\n    United States\n50 - 60 years old\nStagecoach 400 2023\nMarin\nRift Zone 2\nOff Road\n    United States\n50 - 60 years old\nStagecoach 400 2023\nCanyon\nLux Trail\nOff Road\n    Canada\n50 - 60 years old\nStagecoach 400 2023\nHabanero\nCustom 4XL Titanium Hardtail\nOff Road\n    Italy\n40 - 50 years old\nHellenic Mountain Race 2023\nCanyon\nLux Trail CF7 Columbia Blue 2022\nOff Road"
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#which-events-captured-the-most-interest-among-riders",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#which-events-captured-the-most-interest-among-riders",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Which Events Captured the Most Interest Among Riders?",
     "text": "Which Events Captured the Most Interest Among Riders?\nGravel events seem to be increasingly capturing the attention of riders. From the nearly 2200 riders that shared details about their gear choices, 42% of them were associated with gravel events, outshining Off-Road events (35%) and Road events (23%) in engagement.\n\n\n\n\n\n\n\nLeading the gravel category is Badlands race. About 122 riders reported their gear. Following close there are two new races introduced in 2023, Bright Midnight and Seven Serpents, which attracted 78 and 70 riders to post their choices respectively.\nFor off-road cyclists, the classic Tour Divide was the most popular, with 126 riders providing gear information. Other notable events include the Atlas Mountain Race with 104 participants, the Silk Mountain Race with 79, and the Hellenic Mountain Race with 59. All these events are organized by the same director, adding a unique consistency to their appeal.\nIn the Road racing category, the Pan Celtic Race is at the forefront, with 73 riders sharing their gear choices. This is followed by the Mittelgerbirge Classique, which drew the interest of 58 riders, and the Three Peaks Bike Race with 46 participants."
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#rider-demographics",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#rider-demographics",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Rider demographics",
     "text": "Rider demographics\n\nAge distribution\n\nIn cycling events, age demographics show distinct preferences. The majority of participants are in their thirties, and gravel events, in particular, have a consistent appeal to riders in their 30s to 50s. Conversely, off-road events seem to attract the younger and older segments of cyclists more.\nLooking more closely at the data, the most engaging gravel events for riders in their 30s include Bright Midnight, with 46 participants, Badlands with 38, and Seven Serpents attracting 35 riders. For the age group of 40 to 50, Badlands emerges as a notable choice, though other events like Bright Midnight, Seven Serpents, Basajaun, and Istra Land also report comparable participation. These trends suggest a balanced interest in gravel cycling across various age groups.\n\n\n\n\n\n\n\n\n\nNationalities of the Participants\nThe highest number of riders hail from the UK, with Germany and the USA also contributing significantly to the participant pool. However, there’s a notable difference in their event preferences.\nEuropean riders, particularly from the UK and Germany, show a stronger inclination towards gravel races. In contrast, riders from the USA, Canada, and New Zealand predominantly opt for off-road events, representing between 80% to 90% of entries from these countries.\nIn the realm of road racing, French and Polish cyclists show a distinct preference, with many choosing to participate in the Transpyrenees and the Race Through Poland, respectively."
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#bike-brand-preferences",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#bike-brand-preferences",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Bike Brand preferences",
     "text": "Bike Brand preferences\nWhen it comes to the choice of bikes, Canyon and Specialized emerge as the leading brands among riders across various race types. In gravel events, Canyon bikes were used by 8% of the riders, while Specialized bikes accounted for 6%. In the off-road category, Salsa took the lead, being the choice for 11% of the riders, with Canyon and Specialized each capturing 6%. For road racing, Canyon again led the preference with 9%, followed closely by Specialized and Cannondale, each with a 5% usage rate among participants.\n\n\n\n\n\n\n\nAmong the most popular bike brands, the Canyon Grizl, Specialized Diverge, Salsa Cutthroat, Cannondale Topstone, and Trek Procaliber stood out as the top models chosen by riders. These models represent the leading choices within their respective brands."
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#conclusion",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#conclusion",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Conclusion",
     "text": "Conclusion\nThis blog post has offered a brief look at the 2023 bike-packing scene, using interactive data and insights from the rider community. The trends and preferences highlighted here not only reflect the growing popularity of bike-packing but also the evolving dynamics of this exciting sport."
   },
   {
     "objectID": "posts/2023_12_12_a_year_in_ultracycling/index.html#footnotes",
     "href": "posts/2023_12_12_a_year_in_ultracycling/index.html#footnotes",
-    "title": "2023 Bike Packing Wrap Up",
+    "title": "Wrapped 2023 in Ultracycling",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nDisclaimer: This sample does not represent the entire population participating in bikepacking events but only those riders that voluntarily post information about their gear.↩︎\nTo tackle this task, I am using gpt-3.5-turbo-1106.↩︎"
   }
